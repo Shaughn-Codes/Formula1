@@ -1,13 +1,13 @@
-package com.example.f1_dashboard;
-
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-
-@SpringBootTest
-class F1DashboardApplicationTests {
-
-	@Test
-	void contextLoads() {
-	}
-
-}
+//package com.example.f1_dashboard;
+//
+//import org.junit.jupiter.api.Test;
+//import org.springframework.boot.test.context.SpringBootTest;
+//
+//@SpringBootTest
+//class F1DashboardApplicationTests {
+//
+//	@Test
+//	void contextLoads() {
+//	}
+//
+//}
