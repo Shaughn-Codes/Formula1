@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -20,6 +21,8 @@ public class GetDriverStatsImpl implements DriverStatsService {
     private RestTemplate restTemplate;
     private String driversStatsUrl = "https://f1-motorsport-data.p.rapidapi.com/stats?driverId=";
     private static final Logger log = LoggerFactory.getLogger(GetDriverInfoImpl.class);
+    @Value("${f1.api.key}")
+    private String apiKey;
 
 
     @Autowired
@@ -32,7 +35,7 @@ public class GetDriverStatsImpl implements DriverStatsService {
         try {
             HttpHeaders httpHeaders = new HttpHeaders();
             String url = driversStatsUrl + driverID;
-            httpHeaders.set("x-rapidapi-key","b8c79be369msh7dc47ef713a2e9ap11bf45jsnfc0434067cd0");
+            httpHeaders.set("x-rapidapi-key",apiKey);
             httpHeaders.set("x-rapidapi-host","f1-motorsport-data.p.rapidapi.com");
             log.info("Sending request to url: {}",url);
             log.info("Sending headers: {}",httpHeaders);
