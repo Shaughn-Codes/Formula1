@@ -3,9 +3,10 @@ import { useRouter } from "next/router";
 export default function Driver({driverInfo}){
     const router = useRouter();
     const {id} = router.query;
+    const teamName = driverInfo.vehicles && driverInfo.vehicles.length > 0 ? driverInfo.vehicles[0].team : 'Unknown';
     return (
         <div>
-        <h1>Driver Information for {driverInfo.displayName}</h1>
+        <h1>{driverInfo.displayName} for {teamName} </h1>
         <pre>{JSON.stringify(driverInfo, null, 2)}</pre>
         </div>
     );
