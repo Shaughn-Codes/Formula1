@@ -13,9 +13,10 @@ public class DriverInfo {
     private String headshot;
     private Flag flag;
     private Status status;
+    private List<Vehicles> vehicles;
 
     // Constructor
-    public DriverInfo(String id, String firstName, String lastName, String displayName, String shortName, String dateOfBirth, String headshot, Flag flag, Status status) {
+    public DriverInfo(String id, String firstName, String lastName, String displayName, String shortName, String dateOfBirth, String headshot, Flag flag, Status status,List<Vehicles> vehicles) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -25,6 +26,8 @@ public class DriverInfo {
         this.headshot = headshot;
         this.flag = flag;
         this.status = status;
+        this.vehicles = vehicles;
+
     }
 
     // Getters and Setters
@@ -46,6 +49,8 @@ public class DriverInfo {
     public void setFlag(Flag flag) { this.flag = flag; }
     public Status getStatus() { return status; }
     public void setStatus(Status status) { this.status = status; }
+    public List<Vehicles> getVehicles() {return vehicles;}
+    public void setVehicles(List<Vehicles> vehicles) {this.vehicles = vehicles;}
 
     @Override
     public String toString() {
@@ -60,6 +65,85 @@ public class DriverInfo {
                 ", flag='" + flag + '\'' +
                 ", status='" + status + '\'' +
                 '}';
+    }
+
+    public static class Vehicles{
+        public Vehicles(String number, String manufacturer, String chassis, String engine, String tire, String team) {
+            this.number = number;
+            this.manufacturer = manufacturer;
+            this.chassis = chassis;
+            this.engine = engine;
+            this.tire = tire;
+            this.team = team;
+        }
+
+        public String getNumber() {
+            return number;
+        }
+
+        public void setNumber(String number) {
+            this.number = number;
+        }
+
+        public String getManufacturer() {
+            return manufacturer;
+        }
+
+        public void setManufacturer(String manufacturer) {
+            this.manufacturer = manufacturer;
+        }
+
+        public String getChassis() {
+            return chassis;
+        }
+
+        public void setChassis(String chassis) {
+            this.chassis = chassis;
+        }
+
+        public String getEngine() {
+            return engine;
+        }
+
+        public void setEngine(String engine) {
+            this.engine = engine;
+        }
+
+        public String getTire() {
+            return tire;
+        }
+
+        public void setTire(String tire) {
+            this.tire = tire;
+        }
+
+        public String getTeam() {
+            return team;
+        }
+
+        public void setTeam(String team) {
+            this.team = team;
+        }
+
+        @Override
+        public String toString() {
+            return "Vehicals{" +
+                    "number='" + number + '\'' +
+                    ", manufacturer='" + manufacturer + '\'' +
+                    ", chassis='" + chassis + '\'' +
+                    ", engine='" + engine + '\'' +
+                    ", tire='" + tire + '\'' +
+                    ", team='" + team + '\'' +
+                    '}';
+        }
+
+        private String number;
+        private String manufacturer;
+        private String chassis;
+        private String engine;
+        private String tire;
+        private String team;
+
     }
 
     public static class Flag {
