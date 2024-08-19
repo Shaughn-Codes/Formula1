@@ -7,7 +7,11 @@ module.exports = {
     './src/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        racing: ['"Racing Sans One"', 'sans-serif']
+      }
+    },
   },
   plugins: [
     require('daisyui'),
