@@ -10,6 +10,15 @@ module.exports = {
     extend: {
       fontFamily: {
         racing: ['"Racing Sans One"', 'sans-serif']
+      },
+      backgroundImage: {
+        'hero': "url('/formula1logo.png')"
+      },
+      backgroundSize: {
+        'custom': '600px auto',
+      },
+      backdropOpacity: {
+
       }
     },
   },

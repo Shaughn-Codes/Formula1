@@ -4,7 +4,6 @@ import Navbar from '/components/Navbar.js';
 import { useState } from "react";
 
 
-
 export default function Driver({driverInfo,driverStats}){
     const router = useRouter();
     const {id} = router.query;
@@ -31,8 +30,9 @@ export default function Driver({driverInfo,driverStats}){
 
     return (
      <><Navbar />
-     <div className="hero bg-base-200 min-h-screen font-racing">
+     <div className="hero bg-hero bg-no-repeat bg-center bg-contain h-screen bg-custom min-h-screen font-racing">
             <div className="hero-content flex-col lg:flex-row-reverse">
+                
                 <img src={driverInfo.headshot} className="max-w-sm rounded-lg shadow-2xl"></img>
                 <div>
                     <h1 className="text-2xl">{driverName} for {teamName}
