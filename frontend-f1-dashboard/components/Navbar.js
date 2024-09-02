@@ -8,8 +8,12 @@ const Navbar = () => {
         router.push(`/driver/${id}`);
     };
 
+    const handleNewsFetch = () => {
+        router.push('/news')
+    };
+
     return (
-        <div className="navbar bg-base-200 font-racing">
+        <div className="navbar bg-base-200 font-racing z-50 relative">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -30,7 +34,7 @@ const Navbar = () => {
                         tabIndex={0}
                         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow ">
                         <li>
-                            <a>News</a>
+                            <a onClick={() => handleNewsFetch()}>News</a>
                             <a>Drivers</a>
                             <ul className="p-2">
                                 <li><a onClick={() => handleDriverSelect('4665')}>M. Verstappen</a></li>
@@ -61,7 +65,7 @@ const Navbar = () => {
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
-                    <li><a>News</a></li>
+                    <li><a onClick={() => handleNewsFetch()}>News</a></li>
                     <li>
                         <details>
                             <summary>Drivers</summary>
