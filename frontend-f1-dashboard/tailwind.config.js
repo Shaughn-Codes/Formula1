@@ -15,7 +15,7 @@ module.exports = {
         'hero': "url('/formula1logo.png')"
       },
       backgroundSize: {
-        'custom': '600px auto',
+        'custom': '500px auto',
       },
       backdropOpacity: {
 
