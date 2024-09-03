@@ -1,2 +1,2 @@
 # Formula1
-A project to get past and current F1 stats and more. Using a f1 api from api sports. Ideally it will have a spring boot backend and react frontend
+A project working with F1 motorsports APIs. Im using Spring on the backend with Nextjs on the frontend and using DaisyUI for the UI component.
