@@ -12,6 +12,10 @@ const Navbar = () => {
         router.push('/news')
     };
 
+    const handleF1Schedule = () => {
+        router.push('/schedule')
+    };
+
     return (
         <div className="navbar bg-base-200 font-racing z-50 relative">
             <div className="navbar-start">
@@ -58,7 +62,7 @@ const Navbar = () => {
                                 <li><a onClick={() => handleDriverSelect('4520')}>V. Bottas</a></li>
                             </ul>
                         </li>
-                        <li><a>Schedule</a></li>
+                        <li><a onClick={()=> handleF1Schedule()}>Schedule</a></li>
                     </ul>
                 </div>
                 <a className="btn btn-ghost text-xl text-primary">Quali</a>
@@ -92,7 +96,7 @@ const Navbar = () => {
                             </ul>
                         </details>
                     </li>
-                    <li><a>Schedule</a></li>
+                    <li><a onClick={()=> handleF1Schedule()}>Schedule</a></li>
                 </ul>
             </div>
         <div className="navbar-end">
