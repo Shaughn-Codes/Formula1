@@ -13,7 +13,8 @@ const Navbar = () => {
     };
 
     const handleF1Schedule = () => {
-        router.push('/schedule')
+        const currentYear = new Date().getFullYear();
+        router.push(`/schedule/${currentYear}`)
     };
 
     return (
