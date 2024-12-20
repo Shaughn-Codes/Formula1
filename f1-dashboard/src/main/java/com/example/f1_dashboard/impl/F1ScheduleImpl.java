@@ -32,21 +32,50 @@ public class F1ScheduleImpl implements F1ScheduleService {
         try {
             HttpHeaders httpHeaders = new HttpHeaders();
             String url = f1ScheduleUrl + year;
-            httpHeaders.set("x-rapidapi-key",apiKey);
-            httpHeaders.set("x-rapidapi-host","f1-motorsport-data.p.rapidapi.com");
-            log.info("Sending request to url: {}",url);
-            log.info("Sending headers: {}",httpHeaders);
+            httpHeaders.set("x-rapidapi-key", apiKey);
+            httpHeaders.set("x-rapidapi-host", "f1-motorsport-data.p.rapidapi.com");
+
+            // Add more detailed logging
+            log.info("Attempting to fetch F1 Schedule for year: {}", year);
+            log.info("Full URL: {}", url);
+            log.info("API Key used (partial): {}", apiKey.substring(0, 5) + "...");
+
             ResponseEntity<Map<String,List<F1Schedule>>> response = restTemplate.exchange(url, HttpMethod.GET,
-                    new HttpEntity<>(httpHeaders),(Class<Map<String,List<F1Schedule>>>) (Object)Map.class);
-            log.info("Response from F1 Schedule API:", response.getBody().toString());
-            System.out.println(response.getBody().toString());
+                    new HttpEntity<>(httpHeaders), (Class<Map<String,List<F1Schedule>>>) (Object)Map.class);
+
+            log.info("Response status: {}", response.getStatusCode());
+            log.info("Response body: {}", response.getBody());
+
             return response.getBody();
 
         } catch (Exception e) {
-            log.error("Unable to fetch api repsonse: " + e);
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"exception"
-            + "while calling f1 schdule api", e);
+            log.error("Error fetching F1 schedule for year " + year + ": ", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
+                    "Exception while calling F1 schedule API for year " + year, e);
         }
     }
+
+    // @Override
+    // public Map<String, List<F1Schedule>> getF1Schedule(String year) {
+    //     try {
+    //         HttpHeaders httpHeaders = new HttpHeaders();
+    //         String url = f1ScheduleUrl + year;
+    //         httpHeaders.set("x-rapidapi-key",apiKey);
+    //         httpHeaders.set("x-rapidapi-host","f1-motorsport-data.p.rapidapi.com");
+    //         log.info("Sending request to url: {}",url);
+    //         log.info("Sending headers: {}",httpHeaders);
+    //         ResponseEntity<Map<String,List<F1Schedule>>> response = restTemplate.exchange(url, HttpMethod.GET,
+    //                 new HttpEntity<>(httpHeaders),(Class<Map<String,List<F1Schedule>>>) (Object)Map.class);
+    //         log.info("Response from F1 Schedule API:", response.getBody().toString());
+    //         System.out.println(response.getBody().toString());
+    //         return response.getBody();
+
+    //     } catch (Exception e) {
+    //         log.error("Unable to fetch api repsonse: " + e);
+    //         throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"exception"
+    //         + "while calling f1 schdule api", e);
+    //     }
+    // }
+    
 
 }
