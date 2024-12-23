@@ -1,5 +1,7 @@
+'use client';
+import React  from "react";
 import "/src/app/globals.css";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
     const router = useRouter();
@@ -9,7 +11,7 @@ const Navbar = () => {
     };
 
     const handleNewsFetch = () => {
-        router.push('/news')
+        router.push('/')
     };
 
     const handleF1Schedule = () => {
@@ -66,7 +68,7 @@ const Navbar = () => {
                         <li><a onClick={()=> handleF1Schedule()}>Schedule</a></li>
                     </ul>
                 </div>
-                <a className="btn btn-ghost text-xl text-primary">Quali</a>
+                <a onClick={()=> handleNewsFetch()}className="btn btn-ghost text-xl text-primary">Quali</a>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
