@@ -31,6 +31,8 @@ export default function Driver({driverInfo, driverStats}) {
     const flag = driverInfo.flag.href;
 
     // State management for year selection
+    // Setting the year manually because the 2025 seaons has not started yet and there is nothing to fetch from the api
+    
     // const currentYear = new Date().getFullYear();
     const currentYear = 2024;
     const [selectedYear, setSelectedYear] = useState(currentYear);
