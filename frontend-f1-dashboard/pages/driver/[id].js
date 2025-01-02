@@ -31,7 +31,8 @@ export default function Driver({driverInfo, driverStats}) {
     const flag = driverInfo.flag.href;
 
     // State management for year selection
-    const currentYear = new Date().getFullYear();
+    // const currentYear = new Date().getFullYear();
+    const currentYear = 2024;
     const [selectedYear, setSelectedYear] = useState(currentYear);
 
     // Find statistics for the currently selected year
