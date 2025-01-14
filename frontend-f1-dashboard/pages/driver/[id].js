@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import "/src/app/globals.css";
 import Navbar from '/components/Navbar.js';
 import { useState } from "react";
+import Image from 'next/image';
 
 /**
  * F1 Driver Details Component
@@ -57,10 +58,12 @@ export default function Driver({driverInfo, driverStats}) {
             <div className="hero bg-hero bg-no-repeat bg-center bg-contain h-screen bg-custom min-h-screen font-racing">
                 <div className="hero-content flex-col lg:flex-row-reverse">
                     {/* Driver headshot */}
-                    <img 
+                    <Image 
                         src={driverInfo.headshot} 
-                        className="max-w-sm rounded-lg shadow-2xl" 
                         alt={`${driverName} headshot`}
+                        width={650}
+                        height={650}
+                        className="rounded-lg shadow-lg"
                     />
 
                     <div>
@@ -68,10 +71,12 @@ export default function Driver({driverInfo, driverStats}) {
                         <h1 className="text-2xl">
                             {driverName} for {teamName}
                             <span className="inline-flex items-start">
-                                <img 
+                                <Image 
                                     src={flag} 
-                                    className="self-center w-6 h-6 rounded-full mx-2"
                                     alt={`${driverName}'s nationality flag`}
+                                    width={35}
+                                    height={10}
+                                    className="inline-block mr-2"
                                 />
                             </span>
                         </h1>
@@ -79,7 +84,7 @@ export default function Driver({driverInfo, driverStats}) {
                         {/* Driver and team details */}
                         <p>
                             Driver {driverName} drives for {teamName} driving in a {teamChassis} chassis 
-                            with a {teamEngine} engine inside that's manufacturerd by {teamManufacturer} 
+                            with a {teamEngine} engine inside that&apos;s manufactured by {teamManufacturer} 
                             running on {teamTire} tires.
                         </p>
 
