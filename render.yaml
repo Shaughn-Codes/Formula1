@@ -1,9 +1,9 @@
 services:
   - type: web
     name: f1-dashboard-backend
-    env: docker
-    dockerfilePath: ./f1-dashboard/Dockerfile
-    dockerContext: ./f1-dashboard
+    env: image
+    image:
+      url: docker.io/shaughnb/formula1-backend:latest
     envVars:
       - key: SPRING_PROFILES_ACTIVE
         value: prod
@@ -14,9 +14,9 @@ services:
 
   - type: web
     name: f1-dashboard-frontend
-    env: docker
-    dockerfilePath: ./frontend-f1-dashboard/Dockerfile
-    dockerContext: ./frontend-f1-dashboard
+    env: image
+    image:
+      url: docker.io/shaughnb/formula1-frontend:latest
     envVars:
       - key: NEXT_PUBLIC_API_URL
         value: https://f1-dashboard-backend.onrender.com
