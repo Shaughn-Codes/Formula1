@@ -23,5 +23,3 @@ services:
     region: oregon
     plan: starter
     numInstances: 1
-    dependencies:
-      - f1-dashboard-backend
