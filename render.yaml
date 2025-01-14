@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: f1-dashboard-backend
+    env: docker
+    dockerfilePath: ./f1-dashboard/Dockerfile
+    dockerContext: ./f1-dashboard
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+    healthCheckPath: /actuator/health
+    region: oregon
+    plan: starter
+    numInstances: 1
+
+  - type: web
+    name: f1-dashboard-frontend
+    env: docker
+    dockerfilePath: ./frontend-f1-dashboard/Dockerfile
+    dockerContext: ./frontend-f1-dashboard
+    envVars:
+      - key: NEXT_PUBLIC_API_URL
+        value: https://f1-dashboard-backend.onrender.com
+    region: oregon
+    plan: starter
+    numInstances: 1
+    dependencies:
+      - f1-dashboard-backend
