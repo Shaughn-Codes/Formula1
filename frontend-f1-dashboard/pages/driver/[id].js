@@ -68,14 +68,14 @@ export default function Driver({driverInfo, driverStats}) {
 
                     <div>
                         {/* Driver name and nationality flag */}
-                        <h1 className="text-2xl">
+                        <h1 className="text-2xl flex items-center">
                             {driverName} for {teamName}
-                            <span className="inline-flex items-start">
+                            <span className="inline-flex items-center ml-2">
                                 <Image 
                                     src={flag} 
                                     alt={`${driverName}'s nationality flag`}
-                                    width={35}
-                                    height={10}
+                                    width={25}
+                                    height={5}
                                     className="inline-block mr-2"
                                 />
                             </span>
