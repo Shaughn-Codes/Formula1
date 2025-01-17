@@ -8,7 +8,7 @@ function MyApp({ Component, pageProps }) {
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Formula 1 Dashboard</title>
+        <title>Quali: F1 Stats, News, and Schedule</title>
       </Head>
       <Component {...pageProps} />
     </>
