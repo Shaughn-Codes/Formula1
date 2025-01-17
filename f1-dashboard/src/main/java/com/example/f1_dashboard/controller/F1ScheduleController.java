@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:3000"})
+@CrossOrigin(origins = {"http://localhost:3000","https://quali.onrender.com"})
 public class F1ScheduleController {
     private final F1ScheduleService f1ScheduleService;
     public F1ScheduleController(F1ScheduleService f1ScheduleService){

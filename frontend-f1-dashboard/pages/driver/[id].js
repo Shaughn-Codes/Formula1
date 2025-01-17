@@ -3,6 +3,7 @@ import "/src/app/globals.css";
 import Navbar from '/components/Navbar.js';
 import { useState } from "react";
 import Image from 'next/image';
+import config from '../../config';
 
 /**
  * F1 Driver Details Component
@@ -167,11 +168,11 @@ export async function getServerSideProps(context) {
     const {id} = context.params;
 
     // Fetch driver's personal information
-    const driverInfoResponse = await fetch(`http://localhost:8080/get-driver-info/${id}`);
+    const driverInfoResponse = await fetch(`${config.apiUrl}/get-driver-info/${id}`);
     const driverInfo = await driverInfoResponse.json();
 
     // Fetch driver's statistics
-    const driverStatsResponse = await fetch(`http://localhost:8080/get-driver-stats/${id}`);
+    const driverStatsResponse = await fetch(`${config.apiUrl}/get-driver-stats/${id}`);
     const driverStats = await driverStatsResponse.json();
 
     return {

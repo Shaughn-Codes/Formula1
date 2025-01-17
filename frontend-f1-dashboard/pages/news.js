@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Navbar from '../components/Navbar';
+import config from '../config';
 
 /**
  * F1NewsCarousel Component
@@ -28,7 +29,7 @@ const F1NewsCarousel = () => {
     const fetchNews = async () => {
       try {
         // Attempt to fetch 5 news articles from the local API endpoint
-        const response = await fetch('http://localhost:8080/get-f1-news/5');
+        const response = await fetch(`${config.apiUrl}/get-f1-news/5`);
         
         // Check if the response is successful
         if (!response.ok) {

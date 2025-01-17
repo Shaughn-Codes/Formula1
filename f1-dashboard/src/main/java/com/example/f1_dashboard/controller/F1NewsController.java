@@ -13,7 +13,7 @@ import java.util.List;
 
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:3000"})
+@CrossOrigin(origins = {"http://localhost:3000","https://quali.onrender.com"})
 public class F1NewsController {
     private final F1NewsService f1NewsService;
     public F1NewsController(F1NewsService f1NewsService) {

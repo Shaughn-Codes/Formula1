@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import { useState, useMemo, useEffect } from "react";
 import "/src/app/globals.css";
 import Navbar from '/components/Navbar.js';
+import config from '../../config';
 
 /**
  * F1 Schedule Component
@@ -34,7 +35,7 @@ export default function Schedule({ initialSchedule }) {
    */
   const fetchScheduleData = async (year) => {
     try {
-      const response = await fetch(`http://localhost:8080/get-f1-schedule/${year}`);
+      const response = await fetch(`${config.apiUrl}/get-f1-schedule/${year}`);
       if (!response.ok) {
         throw new Error('Failed to fetch schedule');
       }
@@ -165,7 +166,7 @@ export async function getServerSideProps(context) {
 
   try {
     // Fetch initial schedule data for the selected year
-    const scheduleResponse = await fetch(`http://localhost:8080/get-f1-schedule/${selectedYear}`);
+    const scheduleResponse = await fetch(`${config.apiUrl}/get-f1-schedule/${selectedYear}`);
     if (!scheduleResponse.ok) {
       throw new Error('Failed to fetch schedule');
     }
