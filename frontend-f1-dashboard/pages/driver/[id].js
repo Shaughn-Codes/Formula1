@@ -85,8 +85,8 @@ export default function Driver({driverInfo, driverStats}) {
                         {/* Driver and team details */}
                         <p>
                             Driver {driverName} drives for {teamName} driving in a {teamChassis} chassis 
-                            with a {teamEngine} engine inside that&apos;s manufactured by {teamManufacturer} 
-                            running on {teamTire} tires.
+                            with a {teamEngine} engine inside that&apos;s manufactured by {teamManufacturer}, 
+                            and running on {teamTire} tires.
                         </p>
 
                         {/* Year selection dropdown */}
