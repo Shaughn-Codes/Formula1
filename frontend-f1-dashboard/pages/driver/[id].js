@@ -56,34 +56,37 @@ export default function Driver({driverInfo, driverStats}) {
         <>
             <Navbar />
             {/* Main hero section with driver information */}
-            <div className="hero bg-hero bg-no-repeat bg-center bg-contain h-screen bg-custom min-h-screen font-racing">
-                <div className="hero-content flex-col lg:flex-row-reverse">
-                    {/* Driver headshot */}
-                    <Image 
-                        src={driverInfo.headshot} 
-                        alt={`${driverName} headshot`}
-                        width={650}
-                        height={650}
-                        className="rounded-lg shadow-lg"
-                    />
+            <div className="hero bg-hero bg-no-repeat bg-center bg-[length:25%] min-h-screen font-racing">
+                <div className="hero-content flex-col lg:flex-row-reverse p-4 lg:p-8">
+                    {/* Driver headshot - responsive on mobile */}
+                    <div className="w-full lg:w-auto">
+                        <Image 
+                            src={driverInfo.headshot} 
+                            alt={`${driverName} headshot`}
+                            width={650}
+                            height={650}
+                            className="rounded-lg shadow-lg max-w-[300px] md:max-w-[400px] lg:max-w-[650px] mx-auto lg:mx-0 w-full h-auto"
+                            priority
+                        />
+                    </div>
 
-                    <div>
+                    <div className="w-full lg:w-1/2 space-y-6 lg:space-y-4">
                         {/* Driver name and nationality flag */}
-                        <h1 className="text-2xl flex items-center">
-                            {driverName} for {teamName}
-                            <span className="inline-flex items-center ml-2">
+                        <h1 className="text-xl md:text-2xl flex flex-wrap items-center gap-2 lg:gap-0">
+                            <span>{driverName} for {teamName}</span>
+                            <span className="inline-flex items-center lg:ml-2">
                                 <Image 
                                     src={flag} 
                                     alt={`${driverName}'s nationality flag`}
                                     width={25}
                                     height={5}
-                                    className="inline-block mr-2"
+                                    className="inline-block"
                                 />
                             </span>
                         </h1>
 
                         {/* Driver and team details */}
-                        <p>
+                        <p className="text-sm md:text-base lg:text-lg">
                             Driver {driverName} drives for {teamName} driving in a {teamChassis} chassis 
                             with a {teamEngine} engine inside that&apos;s manufactured by {teamManufacturer}, 
                             and running on {teamTire} tires.
@@ -108,45 +111,62 @@ export default function Driver({driverInfo, driverStats}) {
                         {/* Statistics display for selected year */}
                         {currentStats && (
                             <div className="mt-4">
-                                <h2 className="text-lg">
+                                <h2 className="text-lg mb-4">
                                     Stats for {selectedYear} Season
                                 </h2>
-                                {/* Stats grid displaying various performance metrics */}
-                                <div className="stats shadow">
-                                    {/* Championship rank */}
+                                {/* Stats grid - responsive on mobile */}
+                                <div className="grid grid-cols-2 md:grid-cols-3 lg:hidden gap-4 mb-4">
+                                    <div className="stat bg-base-200 rounded-lg p-4">
+                                        <div className="stat-title">Rank</div>
+                                        <div className="stat-value text-2xl">{currentStats.rank}</div>
+                                    </div>
+                                    <div className="stat bg-base-200 rounded-lg p-4">
+                                        <div className="stat-title">Starts</div>
+                                        <div className="stat-value text-2xl text-primary">{currentStats.starts}</div>
+                                    </div>
+                                    <div className="stat bg-base-200 rounded-lg p-4">
+                                        <div className="stat-title">Wins</div>
+                                        <div className="stat-value text-2xl">{currentStats.wins}</div>
+                                    </div>
+                                    <div className="stat bg-base-200 rounded-lg p-4">
+                                        <div className="stat-title">Poles</div>
+                                        <div className="stat-value text-2xl text-primary">{currentStats.poles}</div>
+                                    </div>
+                                    <div className="stat bg-base-200 rounded-lg p-4">
+                                        <div className="stat-title">Top 5</div>
+                                        <div className="stat-value text-2xl">{currentStats.top5}</div>
+                                    </div>
+                                    <div className="stat bg-base-200 rounded-lg p-4">
+                                        <div className="stat-title">Top 10</div>
+                                        <div className="stat-value text-2xl text-primary">{currentStats.top10}</div>
+                                    </div>
+                                </div>
+
+                                {/* Original stats display for desktop */}
+                                <div className="hidden lg:flex stats shadow">
                                     <div className="stat place-items-center">
                                         <div className="stat-title">Rank</div>
                                         <div className="stat-value">{currentStats.rank}</div>
                                     </div>
-                                    {/* Race starts */}
                                     <div className="stat place-items-center">
                                         <div className="stat-title">Starts</div>
                                         <div className="stat-value text-primary">{currentStats.starts}</div>
                                     </div>
-                                    {/* Race wins */}
                                     <div className="stat place-items-center">
                                         <div className="stat-title">Wins</div>
                                         <div className="stat-value">{currentStats.wins}</div>
                                     </div>
-                                    {/* Pole positions */}
                                     <div className="stat place-items-center">
                                         <div className="stat-title">Poles</div>
                                         <div className="stat-value text-primary">{currentStats.poles}</div>
                                     </div>
-                                    {/* Top 5 finishes */}
                                     <div className="stat place-items-center">
                                         <div className="stat-title">Top 5</div>
                                         <div className="stat-value">{currentStats.top5}</div>
                                     </div>
-                                    {/* Top 10 finishes */}
                                     <div className="stat place-items-center">
                                         <div className="stat-title">Top 10</div>
                                         <div className="stat-value text-primary">{currentStats.top10}</div>
-                                    </div>
-                                    {/* Championship points */}
-                                    <div className="stat place-items-center">
-                                        <div className="stat-title">Points</div>
-                                        <div className="stat-value">{currentStats.points}</div>
                                     </div>
                                 </div>
                             </div>
@@ -165,20 +185,27 @@ export default function Driver({driverInfo, driverStats}) {
  * @returns {Object} Props object containing driver info and stats
  */
 export async function getServerSideProps(context) {
-    const {id} = context.params;
+    const { id } = context.params;
+    
+    try {
+        const [infoRes, statsRes] = await Promise.all([
+            fetch(`${config.apiUrl}/get-driver-info/${id}`),
+            fetch(`${config.apiUrl}/get-driver-stats/${id}`)
+        ]);
 
-    // Fetch driver's personal information
-    const driverInfoResponse = await fetch(`${config.apiUrl}/get-driver-info/${id}`);
-    const driverInfo = await driverInfoResponse.json();
+        const driverInfo = await infoRes.json();
+        const driverStats = await statsRes.json();
 
-    // Fetch driver's statistics
-    const driverStatsResponse = await fetch(`${config.apiUrl}/get-driver-stats/${id}`);
-    const driverStats = await driverStatsResponse.json();
-
-    return {
-        props: {
-            driverInfo,
-            driverStats
-        }
-    };
+        return {
+            props: {
+                driverInfo,
+                driverStats,
+            },
+        };
+    } catch (error) {
+        console.error('Error fetching driver data:', error);
+        return {
+            notFound: true,
+        };
+    }
 }
