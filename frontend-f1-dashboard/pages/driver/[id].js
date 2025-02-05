@@ -118,7 +118,11 @@ export default function Driver({driverInfo, driverStats}) {
                                 <div className="grid grid-cols-2 md:grid-cols-3 lg:hidden gap-4 mb-4">
                                     <div className="stat bg-base-200 rounded-lg p-4">
                                         <div className="stat-title">Rank</div>
-                                        <div className="stat-value text-2xl">{currentStats.rank}</div>
+                                        <div className="stat-value text-2xl text-primary">{currentStats.rank}</div>
+                                    </div>
+                                    <div className="stat bg-base-200 rounded-lg p-4">
+                                        <div className="stat-title">Points</div>
+                                        <div className="stat-value text-2xl">{currentStats.points}</div>
                                     </div>
                                     <div className="stat bg-base-200 rounded-lg p-4">
                                         <div className="stat-title">Starts</div>
@@ -133,12 +137,8 @@ export default function Driver({driverInfo, driverStats}) {
                                         <div className="stat-value text-2xl text-primary">{currentStats.poles}</div>
                                     </div>
                                     <div className="stat bg-base-200 rounded-lg p-4">
-                                        <div className="stat-title">Top 5</div>
-                                        <div className="stat-value text-2xl">{currentStats.top5}</div>
-                                    </div>
-                                    <div className="stat bg-base-200 rounded-lg p-4">
                                         <div className="stat-title">Top 10</div>
-                                        <div className="stat-value text-2xl text-primary">{currentStats.top10}</div>
+                                        <div className="stat-value text-2xl">{currentStats.top10}</div>
                                     </div>
                                 </div>
 
@@ -149,24 +149,28 @@ export default function Driver({driverInfo, driverStats}) {
                                         <div className="stat-value">{currentStats.rank}</div>
                                     </div>
                                     <div className="stat place-items-center">
+                                        <div className="stat-title">Points</div>
+                                        <div className="stat-value text-2xl text-primary">{currentStats.points}</div>
+                                    </div>
+                                    <div className="stat place-items-center">
                                         <div className="stat-title">Starts</div>
-                                        <div className="stat-value text-primary">{currentStats.starts}</div>
+                                        <div className="stat-value ">{currentStats.starts}</div>
                                     </div>
                                     <div className="stat place-items-center">
                                         <div className="stat-title">Wins</div>
-                                        <div className="stat-value">{currentStats.wins}</div>
+                                        <div className="stat-value text-primary">{currentStats.wins}</div>
                                     </div>
                                     <div className="stat place-items-center">
                                         <div className="stat-title">Poles</div>
-                                        <div className="stat-value text-primary">{currentStats.poles}</div>
+                                        <div className="stat-value">{currentStats.poles}</div>
                                     </div>
                                     <div className="stat place-items-center">
                                         <div className="stat-title">Top 5</div>
-                                        <div className="stat-value">{currentStats.top5}</div>
+                                        <div className="stat-value text-primary">{currentStats.top5}</div>
                                     </div>
                                     <div className="stat place-items-center">
                                         <div className="stat-title">Top 10</div>
-                                        <div className="stat-value text-primary">{currentStats.top10}</div>
+                                        <div className="stat-value">{currentStats.top10}</div>
                                     </div>
                                 </div>
                             </div>
