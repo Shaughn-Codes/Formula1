@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -37,12 +36,11 @@ public class F1NewsImpl implements F1NewsService {
             httpHeaders.set("x-rapidapi-key",apikey);
             httpHeaders.set("x-rapidapi-host","f1-motorsport-data.p.rapidapi.com");
             log.info("sending request to: {}",url);
-            log.info("Setting headers: {}", httpHeaders);
             ResponseEntity<F1News[]> response = restTemplate.exchange(url, HttpMethod.GET,
                     new HttpEntity<>(httpHeaders),F1News[].class);
             F1News[] f1NewsArray = response.getBody();
             if (f1NewsArray != null) {
-                log.info("Response from F1 News: ", Arrays.toString(f1NewsArray));
+                log.info("Response from F1 News API: received {} items", f1NewsArray.length);
                 return List.of(f1NewsArray);
             } else {
                 throw new RuntimeException("Failed to fetch f1 news");

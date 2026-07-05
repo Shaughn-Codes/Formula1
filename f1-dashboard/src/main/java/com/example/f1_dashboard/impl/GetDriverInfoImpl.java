@@ -34,11 +34,9 @@ public class GetDriverInfoImpl implements DriverInfoService {
             httpHeaders.set("x-rapidapi-key",apiKey);
             httpHeaders.set("x-rapidapi-host","f1-motorsport-data.p.rapidapi.com");
             log.info("Sending request to url: {}",url);
-            log.info("Sending headers: {}",httpHeaders);
             ResponseEntity<DriverInfo> response = restTemplate.exchange(url, HttpMethod.GET,
                    new HttpEntity<>(httpHeaders),DriverInfo.class);
-            log.info("Response from Driver Info API:", response.getBody().toString());
-            System.out.println(response.getBody().toString());
+            log.info("Response from Driver Info API: received response with status {}", response.getStatusCode());
             return response.getBody();
         }catch (Exception e){
             log.error("Unable to fetch api response: " + e);

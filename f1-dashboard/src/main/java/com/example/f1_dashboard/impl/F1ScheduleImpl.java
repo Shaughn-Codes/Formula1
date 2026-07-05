@@ -16,7 +16,7 @@ import java.util.Map;
 
 @Service
 public class F1ScheduleImpl implements F1ScheduleService {
-    private static final Logger log = LoggerFactory.getLogger(GetDriverInfoImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(F1ScheduleImpl.class);
     private RestTemplate restTemplate;
     String f1ScheduleUrl = "https://f1-motorsport-data.p.rapidapi.com/schedule?year=";
     @Value("${f1.api.key}")
@@ -35,10 +35,8 @@ public class F1ScheduleImpl implements F1ScheduleService {
             httpHeaders.set("x-rapidapi-key", apiKey);
             httpHeaders.set("x-rapidapi-host", "f1-motorsport-data.p.rapidapi.com");
 
-            // Add more detailed logging
             log.info("Attempting to fetch F1 Schedule for year: {}", year);
             log.info("Full URL: {}", url);
-            log.info("API Key used (partial): {}", apiKey.substring(0, 5) + "...");
 
             ResponseEntity<Map<String,List<F1Schedule>>> response = restTemplate.exchange(url, HttpMethod.GET,
                     new HttpEntity<>(httpHeaders), (Class<Map<String,List<F1Schedule>>>) (Object)Map.class);

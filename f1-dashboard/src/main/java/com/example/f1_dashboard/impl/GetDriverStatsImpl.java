@@ -20,7 +20,7 @@ import java.util.List;
 public class GetDriverStatsImpl implements DriverStatsService {
     private RestTemplate restTemplate;
     private String driversStatsUrl = "https://f1-motorsport-data.p.rapidapi.com/stats?driverId=";
-    private static final Logger log = LoggerFactory.getLogger(GetDriverInfoImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(GetDriverStatsImpl.class);
     @Value("${f1.api.key}")
     private String apiKey;
 
@@ -38,7 +38,6 @@ public class GetDriverStatsImpl implements DriverStatsService {
             httpHeaders.set("x-rapidapi-key",apiKey);
             httpHeaders.set("x-rapidapi-host","f1-motorsport-data.p.rapidapi.com");
             log.info("Sending request to url: {}",url);
-            log.info("Sending headers: {}",httpHeaders);
             ResponseEntity<DriverStats[]> response = restTemplate.exchange(url, HttpMethod.GET,
                     new HttpEntity<>(httpHeaders), DriverStats[].class);
             DriverStats[] driverStatsArray = response.getBody();
