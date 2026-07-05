@@ -20,9 +20,21 @@ public class F1NewsController {
         this.f1NewsService = f1NewsService;
     }
 
+    private static final int LIMIT_MIN = 1;
+    private static final int LIMIT_MAX = 100;
+
     @GetMapping("/get-f1-news/{limit}")
     public ResponseEntity<List<F1News>> getF1News(@PathVariable String limit){
-        List<F1News> f1News = f1NewsService.getF1News(limit);
+        int limitValue;
+        try {
+            limitValue = Integer.parseInt(limit);
+        } catch (NumberFormatException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        if (limitValue < LIMIT_MIN || limitValue > LIMIT_MAX) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        List<F1News> f1News = f1NewsService.getF1News(String.valueOf(limitValue));
         return new ResponseEntity<>(f1News, HttpStatus.OK);
     }
 }
