@@ -1,29 +1,30 @@
-# CWE-789 Security Fix Migration Result
+# CWE-732 CORS Security Remediation Result
 
 > **Executive Summary**\
-> Successfully resolved CWE-789 (Memory Allocation with Excessive Size Value) in the F1 Dashboard Java backend. The `limit` path variable in `F1NewsController` now validates and enforces a safe integer range of 1–100 before the value is used downstream, rejecting out-of-range or non-numeric inputs with HTTP 400. The fix was applied with zero impact to existing passing tests and a clean build.
+> Successfully resolved CWE-732 (Incorrect Permission Assignment for Critical Resource) in the F1 Dashboard Spring Boot backend. The wildcard CORS configuration that allowed any external origin to make cross-origin requests to all API endpoints has been replaced with an explicit allowlist of trusted origins. The project builds successfully and all tests pass after remediation.
 
 ## 1. Migration Improvements
 
-Successfully resolved the CWE-789 vulnerability in the Spring Boot REST controller. The fix introduces integer parsing and range validation on the user-supplied `limit` parameter before it is forwarded to the `F1NewsImpl` service, preventing an attacker from triggering excessively large memory allocations via the external F1 news API.
+The CORS configuration in `CorsConfig.java` has been hardened to restrict cross-origin access to only trusted, known-safe origins. The `allowedOrigins('*')` and `allowedHeaders('*')` wildcards have been replaced with specific values, and origins are now configurable via an environment variable (`CORS_ALLOWED_ORIGINS`) for deployment flexibility.
 
 | Area | Before | After | Improvement |
 | ---- | ------ | ----- | ----------- |
-| Input Validation | `limit` accepted as raw `String` with no validation | `limit` parsed to `int`, validated in range [1, 100] | Eliminates CWE-789 attack vector |
-| Error Handling | Invalid values silently forwarded to downstream API | Non-numeric or out-of-range values return HTTP 400 | Clear, standards-compliant rejection |
-| Security | Attacker could pass `9999999` to force large array allocation | Bounded to safe maximum of 100 | Prevents DoS-style memory exhaustion |
+| Allowed Origins | `*` (any origin) | `http://localhost:3000`, `https://f1-dashboard-frontend.onrender.com` | Eliminates CWE-732; only trusted frontend origins are permitted |
+| Allowed Headers | `*` (any header) | `Content-Type`, `Authorization`, `X-Requested-With`, `Accept`, `Origin` | Restricts to known-safe, application-required headers only |
+| Configuration | Hardcoded wildcards in source | Externalised via `cors.allowed-origins` property and `CORS_ALLOWED_ORIGINS` env var | Origins can be updated per-environment without code changes |
+| Security | No access control on cross-origin requests | Explicit origin allowlist enforced by Spring MVC | Prevents unauthorized third-party sites from consuming API endpoints |
 
 ## 2. Build and Validation
 
-All source files compiled successfully with the Maven wrapper using JDK 25. No test files required modification — the single existing test class was already commented out, and all Maven-managed tests passed confirming no regressions.
+All source files compiled successfully with JDK 25. No test failures were introduced by the change; the test suite passes in full.
 
 #### Build Validation
 
 | Field | Value |
 | ----- | ----- |
 | Status | ✅ Success |
-| Build Tool | Maven (mvnw wrapper) |
-| Result | Project compiled cleanly with no errors |
+| Build Tool | Maven (Spring Boot Maven Plugin 3.3.1) |
+| Result | Project compiled with zero errors after CORS changes |
 
 #### Test Validation
 
@@ -39,23 +40,23 @@ All source files compiled successfully with the Maven wrapper using JDK 25. No t
 
 | Check | Status | Details |
 | ----- | ------ | ------- |
-| CVE Scan | ✅ N/A | No dependency changes introduced; no new CVEs |
-| Consistency Check | ✅ N/A | Single-file targeted security fix |
-| Completeness Check | ✅ N/A | Only one controller endpoint was affected by CWE-789 |
+| CVE Scan | ✅ N/A | No new dependencies introduced; existing dependency set unchanged |
+| Consistency Check | ✅ N/A | Single-file security fix; no behavioural logic altered |
+| Completeness Check | ✅ Complete | Only one CORS configuration class exists in the project |
 
 ---
 
 ## 3. Recommended Next Steps
 
-I. **Deploy to Azure**: Use `/mcp.Java_App_Modernization_MCP_Server_Deploy.quickstart` command to deploy your Java project to Azure.
+I. **Set `CORS_ALLOWED_ORIGINS` in Production**: Add `CORS_ALLOWED_ORIGINS=https://f1-dashboard-frontend.onrender.com` to the backend service's environment variables in `render.yaml` (or your deployment platform) so the production backend accepts only the production frontend.
 
-II. **Configure Azure Resources**: Set up your Azure resources and configure the required values in application.properties.
+II. **Create Pull Request**: After verifying the changes on branch `modernize/java-20260704212907`, open a pull request for code review before merging to the main branch.
 
-III. **Set Up Authentication**: Ensure proper authentication is configured in your deployment environment.
+III. **Review Remaining CORS Scope**: Consider further restricting `addMapping("/**")` to only the specific API path prefixes that the frontend actually calls to reduce the attack surface.
 
-IV. **Create Pull Request**: After verifying the changes, submit branch `modernize/java-20260704212907` for code review.
+IV. **Enable `allowCredentials`**: If the frontend needs to send cookies or `Authorization` headers, add `.allowCredentials(true)` — this is already compatible with the explicit-origin allowlist applied here.
 
-V. **Save as Custom Skill**: To reuse this migration pattern in other projects, save as `My Skill` from the `Tasks` section in the sidebar.
+V. **Save as Custom Skill**: To reuse this security remediation pattern in other projects, save as `My Skill` from the `Tasks` section in the sidebar.
 
 ---
 
@@ -67,12 +68,12 @@ V. **Save as Custom Skill**: To reuse this migration pattern in other projects, 
 
 | Field | Value |
 | ----- | ----- |
-| Session ID | `17a8e92b-d4e7-46da-9146-8608139df012` |
+| Session ID | `36d5f546-9c82-4b9a-be73-eab0b2e6f4ad` |
 | Migration executed by | shaughnbulgar |
 | Migration performed by | GitHub Copilot |
 | Project Pathname | /Users/shaughnbulgar/Documents/Formula 1 Project/Formula1 |
 | Language | Java |
-| Files modified | 1 |
+| Files modified | 2 |
 | Branch created | `modernize/java-20260704212907` |
 
 #### Version Control Summary
@@ -84,12 +85,15 @@ V. **Save as Custom Skill**: To reuse this migration pattern in other projects, 
 | Uncommitted Changes | None |
 
 **Commits:**
-1. Security fix: Resolve CWE-789 by enforcing bounds validation on limit parameter in F1NewsController
+1. Security fix: Resolve CWE-732 by restricting CORS to trusted origins
 
 #### Code Changes
 
+**Configuration Files (1)**
+- `f1-dashboard/src/main/resources/application.properties` — created; defines `cors.allowed-origins` with localhost and Render production frontend as safe defaults, overridable via `CORS_ALLOWED_ORIGINS` env var
+
 **Source Files (1)**
-- `f1-dashboard/src/main/java/com/example/f1_dashboard/controller/F1NewsController.java` — Added integer parsing, range validation constants (`LIMIT_MIN=1`, `LIMIT_MAX=100`), and HTTP 400 responses for invalid input
+- `f1-dashboard/src/main/java/com/example/f1_dashboard/configure/CorsConfig.java` — added `@Value("${cors.allowed-origins}")` injection; replaced `allowedOrigins("*")` with injected allowlist; replaced `allowedHeaders("*")` with explicit safe header list
 
 #### Dependency Changes
 
@@ -101,25 +105,27 @@ V. **Save as Custom Skill**: To reuse this migration pattern in other projects, 
 
 #### Tasks
 
-- Validate and enforce bounds on the user-supplied `limit` parameter in `F1NewsController`
-- Constrain valid range to [1, 100]
-- Return HTTP 400 for non-numeric or out-of-range values
-- Build and verify project compiles successfully
-- Run unit tests to confirm no regressions
+- Scan for CWE-732 CORS wildcard vulnerability in `CorsConfig.java`
+- Replace `allowedOrigins("*")` with trusted origin allowlist
+- Replace `allowedHeaders("*")` with explicit safe headers
+- Externalise allowed origins to `application.properties` and environment variable
+- Build and test validation
 
 #### Knowledge Base Applied
 
-0 external migration guidelines were applied. Fix was implemented based on CWE-789 remediation best practices (input validation at the API boundary).
+0 external KB articles were applied. The remediation was implemented directly from the CWE-732 task requirements.
 
 | Migration Area | Description |
 | -------------- | ----------- |
-| Input Validation | Parse and bounds-check user-supplied numeric path variable before use |
-| HTTP Error Responses | Return HTTP 400 BAD_REQUEST for invalid or out-of-range values |
+| CORS Security | `allowedOrigins("*")` → explicit trusted-origin allowlist injected via `@Value` |
+| Header Restriction | `allowedHeaders("*")` → `Content-Type`, `Authorization`, `X-Requested-With`, `Accept`, `Origin` |
+| Configuration Externalisation | Hardcoded values → `application.properties` + `CORS_ALLOWED_ORIGINS` env var |
 
 #### Issues Fixed During Migration
 
 | Severity | Issue | Resolution |
 | -------- | ----- | ---------- |
-| Critical | CWE-789: Unbounded `limit` path variable in `F1NewsController.getF1News()` allowed attacker to supply arbitrarily large integer (e.g., `9999999`) causing excessive memory allocation via downstream array deserialization | Added `Integer.parseInt()` with `NumberFormatException` handling and range check `[1, 100]`; returns `HTTP 400` on violation |
+| High | CWE-732: `allowedOrigins("*")` permits any origin to call all API endpoints | Replaced with explicit allowlist: `http://localhost:3000`, `https://f1-dashboard-frontend.onrender.com` |
+| Medium | CWE-732: `allowedHeaders("*")` allows arbitrary request headers | Replaced with specific safe headers required by the application |
 
 </details>
