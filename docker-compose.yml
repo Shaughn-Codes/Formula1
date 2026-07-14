@@ -9,6 +9,9 @@ services:
       - "8080:8080"
     environment:
       - SPRING_PROFILES_ACTIVE=prod
+      # Set F1_API_KEY to your RapidAPI key for the F1 Motorsport Data API.
+      # Never hard-code a real value here; pass it via an .env file or your secrets manager.
+      - F1_API_KEY=${F1_API_KEY}
 
   frontend:
     build:

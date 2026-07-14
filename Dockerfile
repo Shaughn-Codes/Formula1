@@ -1,8 +1,8 @@
 # Build stage for the Spring Boot backend
-FROM maven:3.8.4-openjdk-17 as backend-builder
+FROM eclipse-temurin:25-jdk-jammy as backend-builder
 WORKDIR /backend
 COPY f1-dashboard/ .
-RUN mvn clean package -DskipTests
+RUN ./mvnw clean package -DskipTests
 
 # Build stage for the Next.js frontend
 FROM node:18-alpine as frontend-builder
@@ -12,7 +12,7 @@ RUN npm install
 RUN npm run build
 
 # Final stage
-FROM openjdk:17-slim
+FROM eclipse-temurin:25-jre-jammy
 WORKDIR /app
 
 # Copy backend jar

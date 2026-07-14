@@ -7,6 +7,8 @@ services:
     envVars:
       - key: SPRING_PROFILES_ACTIVE
         value: prod
+      - key: F1_API_KEY
+        sync: false
     healthCheckPath: /actuator/health
     region: oregon
     plan: starter
