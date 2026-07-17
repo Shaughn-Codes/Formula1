@@ -3,6 +3,9 @@ package com.example.f1_dashboard.f1news;
 import java.util.List;
 
 public class F1News {
+    public F1News() {
+    }
+
     public F1News(String dataSourceIdentifier, String description, String headline, String link, List<Images> images) {
         this.dataSourceIdentifier = dataSourceIdentifier;
         this.description = description;
@@ -69,6 +72,9 @@ public class F1News {
     List<Images> images;
 
     public static class Images{
+        public Images() {
+        }
+
         public Images(String dataSourceIdentifier, String name, int width, int height, int id, String credit, String url) {
             this.dataSourceIdentifier = dataSourceIdentifier;
             this.name = name;
@@ -157,5 +163,4 @@ public class F1News {
         private String url;
     }
 }
-
 

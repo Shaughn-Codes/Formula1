@@ -1,0 +1,22 @@
+# Root-level .gitignore for the Formula1 monorepo
+
+# Next.js build output (contains auto-generated encryptionKey — CWE-321 mitigation)
+frontend-f1-dashboard/.next/
+frontend-f1-dashboard/out/
+
+# Node dependencies
+frontend-f1-dashboard/node_modules/
+
+# Environment / secrets — NEVER commit real env files
+**/.env.local
+**/.env.*.local
+**/*.pem
+
+# OS / IDE artefacts
+.DS_Store
+**/.DS_Store
+.idea/
+*.iml
+
+# Java / Maven build output (already covered by sub-project .gitignore)
+f1-dashboard/target/

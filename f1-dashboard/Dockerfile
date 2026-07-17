@@ -1,10 +1,10 @@
-FROM maven:3.9.6-eclipse-temurin-21 as builder
+FROM eclipse-temurin:25-jdk-jammy as builder
 
 WORKDIR /app
 COPY . .
-RUN mvn clean package -DskipTests
+RUN ./mvnw clean package -DskipTests
 
-FROM eclipse-temurin:21-jre-jammy
+FROM eclipse-temurin:25-jre-jammy
 WORKDIR /app
 COPY --from=builder /app/target/*.jar app.jar
 

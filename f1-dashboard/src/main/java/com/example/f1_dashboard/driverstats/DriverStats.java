@@ -1,6 +1,9 @@
 package com.example.f1_dashboard.driverstats;
 
 public class DriverStats {
+    public DriverStats() {
+    }
+
     public DriverStats(int year, int rank, int starts, int wins, int poles, int top5, int top10, int points) {
         this.year = year;
         this.rank = rank;
