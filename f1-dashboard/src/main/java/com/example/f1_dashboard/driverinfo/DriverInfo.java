@@ -15,6 +15,9 @@ public class DriverInfo {
     private Status status;
     private List<Vehicles> vehicles;
 
+    public DriverInfo() {
+    }
+
     // Constructor
     public DriverInfo(String id, String firstName, String lastName, String displayName, String shortName, String dateOfBirth, String headshot, Flag flag, Status status,List<Vehicles> vehicles) {
         this.id = id;
@@ -68,6 +71,9 @@ public class DriverInfo {
     }
 
     public static class Vehicles{
+        public Vehicles() {
+        }
+
         public Vehicles(String number, String manufacturer, String chassis, String engine, String tire, String team) {
             this.number = number;
             this.manufacturer = manufacturer;
@@ -147,6 +153,9 @@ public class DriverInfo {
     }
 
     public static class Flag {
+        public Flag() {
+        }
+
         private String href;
         private String alt;
         private List<String> rel;
@@ -170,6 +179,9 @@ public class DriverInfo {
     }
 
     public static class Status {
+        public Status() {
+        }
+
         private String id;
         private String name;
         private String type;
@@ -196,4 +208,3 @@ public class DriverInfo {
         }
     }
 }
-

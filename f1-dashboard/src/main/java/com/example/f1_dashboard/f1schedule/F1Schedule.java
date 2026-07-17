@@ -8,6 +8,9 @@ public class F1Schedule {
     String winner;
     Boolean completed;
 
+    public F1Schedule() {
+    }
+
     public F1Schedule(String startDate, String endDate, String gPrx, String crct, String winner, Boolean completed) {
         this.startDate = startDate;
         this.endDate = endDate;

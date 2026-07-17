@@ -1,47 +1,22 @@
 package com.example.f1_dashboard.impl;
 
+import com.example.f1_dashboard.client.F1ApiClient;
 import com.example.f1_dashboard.driverinfo.DriverInfo;
 import com.example.f1_dashboard.service.DriverInfoService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.*;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.server.ResponseStatusException;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
 
 @Service
 public class GetDriverInfoImpl implements DriverInfoService {
+    private final F1ApiClient f1ApiClient;
 
-    private static final Logger log = LoggerFactory.getLogger(GetDriverInfoImpl.class);
-    private RestTemplate restTemplate;
-    String driverInfoUrl = "https://f1-motorsport-data.p.rapidapi.com/athlete-info?athleteId=";
-    @Value("${f1.api.key}")
-    private String apiKey;
-
-    @Autowired
-    public GetDriverInfoImpl(RestTemplate restTemplate){
-        this.restTemplate = restTemplate;
+    public GetDriverInfoImpl(F1ApiClient f1ApiClient) {
+        this.f1ApiClient = f1ApiClient;
     }
 
     @Override
-    public DriverInfo getDriverInfo(String driverID){
-        try {
-            HttpHeaders httpHeaders = new HttpHeaders();
-            String url = driverInfoUrl + driverID;
-            httpHeaders.set("x-rapidapi-key",apiKey);
-            httpHeaders.set("x-rapidapi-host","f1-motorsport-data.p.rapidapi.com");
-            log.info("Sending request to url: {}",url);
-            ResponseEntity<DriverInfo> response = restTemplate.exchange(url, HttpMethod.GET,
-                   new HttpEntity<>(httpHeaders),DriverInfo.class);
-            log.info("Response from Driver Info API: received response with status {}", response.getStatusCode());
-            return response.getBody();
-        }catch (Exception e){
-            log.error("Unable to fetch api response: " + e);
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "exception " +
-                    "while calling driver info api",e);
-        }
+    public DriverInfo getDriverInfo(String driverID) {
+        return f1ApiClient.get("/athlete-info", Map.of("athleteId", driverID), DriverInfo.class);
     }
 }
