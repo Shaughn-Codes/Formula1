@@ -5,24 +5,10 @@ import { useState } from "react";
 import Image from 'next/image';
 import config from '../../config';
 
-/**
- * F1 Driver Details Component
- * 
- * Displays detailed information about a specific F1 driver including:
- * - Personal information (name, nationality)
- * - Current team details (team name, car specifications)
- * - Year-by-year statistics
- * - Driver headshot and nationality flag
- * 
- * @param {Object} driverInfo - Driver's personal and team information
- * @param {Array} driverStats - Array of driver's statistics by year
- */
 export default function Driver({driverInfo, driverStats}) {
     const router = useRouter();
     const {id} = router.query;
 
-    // Extract driver's personal information and team details
-    // Using optional chaining to safely access nested properties
     const driverName = driverInfo.displayName;
     const teamName = driverInfo.vehicles?.[0]?.team ?? 'Unknown';
     const uniformNumber = driverInfo.vehicles?.[0]?.number ?? 'Unknown';
@@ -32,22 +18,12 @@ export default function Driver({driverInfo, driverStats}) {
     const teamChassis = driverInfo.vehicles?.[0]?.chassis ?? 'Unknown';
     const flag = driverInfo.flag.href;
 
-    // State management for year selection
-    // Setting the year manually because the 2025 seaons has not started yet and there is nothing to fetch from the api
-    
-    // const currentYear = new Date().getFullYear();
+    // Hardcoded to 2024 since 2025 season hasn't started yet
     const currentYear = 2024;
     const [selectedYear, setSelectedYear] = useState(currentYear);
 
-    // Find statistics for the currently selected year
     const currentStats = driverStats.find(stat => stat.year === selectedYear);
 
-    /**
-     * Handler for year selection change
-     * Updates the selectedYear state when user selects a different year
-     * 
-     * @param {Event} event - Change event from the select element
-     */
     const handleYearChange = (event) => {
         setSelectedYear(Number(event.target.value));
     };
@@ -55,10 +31,8 @@ export default function Driver({driverInfo, driverStats}) {
     return (
         <>
             <Navbar />
-            {/* Main hero section with driver information */}
             <div className="hero bg-hero bg-no-repeat bg-center bg-[length:25%] min-h-screen font-racing">
                 <div className="hero-content flex-col lg:flex-row-reverse p-4 lg:p-8">
-                    {/* Driver headshot - responsive on mobile */}
                     <div className="w-full lg:w-auto">
                         <Image 
                             src={driverInfo.headshot} 
@@ -71,7 +45,6 @@ export default function Driver({driverInfo, driverStats}) {
                     </div>
 
                     <div className="w-full lg:w-1/2 space-y-6 lg:space-y-4">
-                        {/* Driver name and nationality flag */}
                         <h1 className="text-xl md:text-2xl flex flex-wrap items-center gap-2 lg:gap-0">
                             <span>{driverName} for {teamName}</span>
                             <span className="inline-flex items-center lg:ml-2">
@@ -85,14 +58,12 @@ export default function Driver({driverInfo, driverStats}) {
                             </span>
                         </h1>
 
-                        {/* Driver and team details */}
                         <p className="text-sm md:text-base lg:text-lg">
                             Driver {driverName} drives for {teamName} driving in a {teamChassis} chassis 
                             with a {teamEngine} engine inside that&apos;s manufactured by {teamManufacturer}, 
                             and running on {teamTire} tires.
                         </p>
 
-                        {/* Year selection dropdown */}
                         <div className="mt-4">
                             <label className="block mb-2 text-sm font-medium">Select Year:</label>
                             <select 
@@ -108,13 +79,12 @@ export default function Driver({driverInfo, driverStats}) {
                             </select>
                         </div>
 
-                        {/* Statistics display for selected year */}
                         {currentStats && (
                             <div className="mt-4">
                                 <h2 className="text-lg mb-4">
                                     Stats for {selectedYear} Season
                                 </h2>
-                                {/* Stats grid - responsive on mobile */}
+                                {/* Mobile grid */}
                                 <div className="grid grid-cols-2 md:grid-cols-3 lg:hidden gap-4 mb-4">
                                     <div className="stat bg-base-200 rounded-lg p-4">
                                         <div className="stat-title">Rank</div>
@@ -142,7 +112,7 @@ export default function Driver({driverInfo, driverStats}) {
                                     </div>
                                 </div>
 
-                                {/* Original stats display for desktop */}
+                                {/* Desktop stats */}
                                 <div className="hidden lg:flex stats shadow">
                                     <div className="stat place-items-center">
                                         <div className="stat-title">Rank</div>
@@ -182,12 +152,7 @@ export default function Driver({driverInfo, driverStats}) {
     );
 }
 
-/**
- * Server-side props function to fetch driver information and statistics
- * 
- * @param {Object} context - Next.js context object containing route parameters
- * @returns {Object} Props object containing driver info and stats
- */
+// Fetches driver info and stats from API
 export async function getServerSideProps(context) {
     const { id } = context.params;
     
